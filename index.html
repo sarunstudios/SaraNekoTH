@@ -16,7 +16,7 @@
     }
 
     /* พื้นหลังวิดีโอ */
-    #bgVideo {
+    #bgVideo1 {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -29,7 +29,31 @@
     }
 
     /* ทำให้วิดีโอขยายเต็มจอและไม่เหลือขอบดำ */
-    #ytplayer {
+    #ytplayer1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* พื้นหลังวิดีโอที่เล่นเสียง */
+    #bgVideo2 {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+      overflow: hidden;
+      opacity: 0; /* ซ่อนพื้นหลังที่สอง */
+    }
+
+    /* ทำให้วิดีโอขยายเต็มจอและไม่เหลือขอบดำ */
+    #ytplayer2 {
       position: absolute;
       top: 0;
       left: 0;
@@ -124,10 +148,21 @@
 </head>
 <body>
 
-  <!-- YouTube Background -->
-  <div id="bgVideo">
-    <iframe id="ytplayer"
+  <!-- YouTube Background 1 (ไม่เล่นเสียง) -->
+  <div id="bgVideo1">
+    <iframe id="ytplayer1"
       src="https://www.youtube.com/embed/xLo-BrCh7JQ?autoplay=1&mute=1&controls=0&loop=1&playlist=xLo-BrCh7JQ&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
+      frameborder="0"
+      allow="autoplay"
+      width="100%"
+      height="100%">
+    </iframe>
+  </div>
+
+  <!-- YouTube Background 2 (เล่นเสียง) -->
+  <div id="bgVideo2">
+    <iframe id="ytplayer2"
+      src="https://www.youtube.com/embed/xLo-BrCh7JQ?autoplay=1&mute=0&controls=0&loop=1&playlist=xLo-BrCh7JQ&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
       frameborder="0"
       allow="autoplay"
       width="100%"
@@ -204,3 +239,5 @@
 
 </body>
 </html>
+<!-- End of index.html -->
+<!-- This is a simple HTML page with a YouTube video background, a welcome screen, and a sound toggle button. The page uses CSS for styling and JavaScript for functionality. -->
