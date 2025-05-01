@@ -47,43 +47,47 @@
       background: url('https://i.pinimg.com/originals/4e/98/51/4e9851eedd0e229bf4a9fb4c85207b93.gif') center center / cover no-repeat;
       z-index: 10;
     }
+    @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
+  #welcome h1 {
+    opacity: 0;
+    animation: fadeIn 3s ease forwards;
+    animation-delay: 1s;
+  }
+
+  #enterBtn {
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  #enterBtn.visible {
+    opacity: 1;
+  }
     #main {
       background: rgba(0,0,0,0.4);
       opacity: 0;
       pointer-events: none;
     }
-
     #soundToggle {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999; /* จากเดิม z-index: 20 */
-  background: rgba(0,0,0,0.6);
-  border: 1px solid white;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s ease;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 20;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid white;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+#soundToggle:hover {
+  background: rgba(255,255,255,0.2);
 }
-
-    #soundToggle:hover {
-      background: rgba(255,255,255,0.2);
-    }
-
-    /* เพิ่มเอฟเฟกต์ fadeIn */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    #welcome h1 {
-      opacity: 0;
-      animation: fadeIn 3s ease forwards;
-      animation-delay: 1s;
-    }
 
     button {
       padding: 10px 20px;
@@ -93,11 +97,11 @@
       background: rgba(0, 0, 0, 0.5);
       border: 1px solid white;
       color: white;
-      opacity: 0;
-      transition: opacity 1s ease;
+      opacity: 0.5;
+      transition: opacity 0.5s ease;
     }
 
-    button.visible {
+    button:enabled {
       opacity: 1;
     }
 
@@ -108,7 +112,6 @@
 </head>
 <body>
   <button id="soundToggle" onclick="toggleSound()">🔇 ปิดเสียง</button>
-
   <!-- ฉากหลัง YouTube (ครอปเต็มจอ) -->
   <div class="fullscreen-bg">
     <iframe 
@@ -138,42 +141,46 @@
         document.getElementById('main').style.pointerEvents = 'auto';
       }, 1000);
     }
+    let isMuted = true; // เปลี่ยนเป็น false ถ้าอยากเริ่มแบบเปิดเสียง
 
-    let isMuted = true; // เริ่มแบบปิดเสียง
+function toggleSound() {
+  const iframe = document.querySelector('iframe');
+  const btn = document.getElementById('soundToggle');
 
-    function toggleSound() {
-      const iframe = document.querySelector('iframe');
-      const btn = document.getElementById('soundToggle');
+  // สลับสถานะเสียง
+  isMuted = !isMuted;
 
-      isMuted = !isMuted;
+  // ส่งคำสั่งไปยัง YouTube player
+  iframe.contentWindow.postMessage(JSON.stringify({
+    event: 'command',
+    func: isMuted ? 'mute' : 'unMute',
+    args: []
+  }), '*');
 
-      iframe.contentWindow.postMessage(JSON.stringify({
-        event: 'command',
-        func: isMuted ? 'mute' : 'unMute',
-        args: []
-      }), '*');
+  btn.innerText = isMuted ? '🔇 ปิดเสียง' : '🔊 เปิดเสียง';
+}
 
-      btn.innerText = isMuted ? '🔇 ปิดเสียง' : '🔊 เปิดเสียง';
-    }
+// ตั้งค่าเริ่มต้น (mute)
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const iframe = document.querySelector('iframe');
+    iframe.contentWindow.postMessage(JSON.stringify({
+      event: 'command',
+      func: isMuted ? 'mute' : 'unMute',
+      args: []
+    }), '*');
+  }, 1000);
+});
 
+
+    // ถ่วงเวลา 5 วิ ก่อนเปิดให้กดปุ่ม
     window.addEventListener('load', () => {
-      // เริ่ม mute ตอนโหลด
-      setTimeout(() => {
-        const iframe = document.querySelector('iframe');
-        iframe.contentWindow.postMessage(JSON.stringify({
-          event: 'command',
-          func: isMuted ? 'mute' : 'unMute',
-          args: []
-        }), '*');
-      }, 1000);
-
-      // แสดงปุ่มเข้าสู่เว็บแบบค่อย ๆ โผล่หลังจากข้อความ fade เสร็จ
       setTimeout(() => {
         const btn = document.getElementById('enterBtn');
-        btn.classList.add('visible');
         btn.disabled = false;
       }, 5000);
     });
   </script>
+
 </body>
 </html>
