@@ -53,24 +53,20 @@
       transition: opacity 1s ease;
     }
 
-    #welcome h1 {
-      opacity: 0;
-      animation: fadeIn 3s ease forwards;
-      animation-delay: 1s;
-      position: relative;
-      z-index: 20;
-    }
-
     #welcome {
       background: url('https://i.pinimg.com/originals/4e/98/51/4e9851eedd0e229bf4a9fb4c85207b93.gif') center center / cover no-repeat;
       z-index: 2;
-      filter: blur(0px);
-      position: relative;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
+    }
+
+    #welcome h1 {
+      opacity: 0;
+      animation: fadeIn 3s ease forwards;
+      animation-delay: 1s;
     }
 
     #enterBtn {
@@ -167,7 +163,7 @@
         },
         events: {
           onReady: (event) => {
-            player.setVolume(25);
+            player.setVolume(50);
             player.mute();
           }
         }
