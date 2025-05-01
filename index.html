@@ -47,30 +47,35 @@
       background: url('https://i.pinimg.com/originals/4e/98/51/4e9851eedd0e229bf4a9fb4c85207b93.gif') center center / cover no-repeat;
       z-index: 10;
     }
+
     @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-  #welcome h1 {
-    opacity: 100;
-    animation: fadeIn 3s ease forwards;
-    animation-delay: 1s;
-  }
+    #welcome h1 {
+      opacity: 0;
+      animation: fadeIn 3s ease forwards;
+      animation-delay: 1s;
+    }
 
-  #enterBtn {
-    opacity: 0;
-    transition: opacity 1s ease;
-  }
+    #enterBtn {
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
 
-  #enterBtn.visible {
-    opacity: 1;
-  }
+    #enterBtn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     #main {
       background: rgba(0,0,0,0.4);
       opacity: 0;
       pointer-events: none;
     }
+
     #soundToggle {
       position: fixed;
       bottom: 20px;
@@ -85,9 +90,10 @@
       font-size: 14px;
       transition: background 0.3s ease;
     }
-#soundToggle:hover {
-  background: rgba(255,255,255,0.2);
-}
+
+    #soundToggle:hover {
+      background: rgba(255,255,255,0.2);
+    }
 
     button {
       padding: 10px 20px;
@@ -112,7 +118,7 @@
 </head>
 <body>
   <button id="soundToggle" onclick="toggleSound()">🔇 ปิดเสียง</button>
-  <!-- ฉากหลัง YouTube (ครอปเต็มจอ) -->
+
   <div class="fullscreen-bg">
     <iframe 
       src="https://www.youtube.com/embed/xLo-BrCh7JQ?autoplay=1&controls=0&mute=1&loop=1&playlist=xLo-BrCh7JQ&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
@@ -120,13 +126,11 @@
     </iframe>
   </div>
 
-  <!-- หน้า Welcome -->
   <div id="welcome">
     <h1>ยินดีต้อนรับ สู่ SaraNekoTH fanpage</h1>
     <button id="enterBtn" onclick="enterSite()" disabled>เข้าสู่เว็บไซต์</button>
   </div>
 
-  <!-- หน้าเพจหลัก -->
   <div id="main">
     <h1>นี่คือหน้าเว็บหลักของเรา</h1>
     <p>ยินดีต้อนรับอย่างเป็นทางการ!</p>
@@ -141,46 +145,40 @@
         document.getElementById('main').style.pointerEvents = 'auto';
       }, 1000);
     }
-    let isMuted = true; // เปลี่ยนเป็น false ถ้าอยากเริ่มแบบเปิดเสียง
 
-function toggleSound() {
-  const iframe = document.querySelector('iframe');
-  const btn = document.getElementById('soundToggle');
+    let isMuted = true;
 
-  // สลับสถานะเสียง
-  isMuted = !isMuted;
+    function toggleSound() {
+      const iframe = document.querySelector('iframe');
+      const btn = document.getElementById('soundToggle');
 
-  // ส่งคำสั่งไปยัง YouTube player
-  iframe.contentWindow.postMessage(JSON.stringify({
-    event: 'command',
-    func: isMuted ? 'mute' : 'unMute',
-    args: []
-  }), '*');
+      isMuted = !isMuted;
 
-  btn.innerText = isMuted ? '🔇 ปิดเสียง' : '🔊 เปิดเสียง';
-}
+      iframe.contentWindow.postMessage(JSON.stringify({
+        event: 'command',
+        func: isMuted ? 'mute' : 'unMute',
+        args: []
+      }), '*');
 
-// ตั้งค่าเริ่มต้น (mute)
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const iframe = document.querySelector('iframe');
-    iframe.contentWindow.postMessage(JSON.stringify({
-      event: 'command',
-      func: isMuted ? 'mute' : 'unMute',
-      args: []
-    }), '*');
-  }, 1000);
-});
+      btn.innerText = isMuted ? '🔇 ปิดเสียง' : '🔊 เปิดเสียง';
+    }
 
-
-    // ถ่วงเวลา 5 วิ ก่อนเปิดให้กดปุ่ม
     window.addEventListener('load', () => {
       setTimeout(() => {
+        const iframe = document.querySelector('iframe');
+        iframe.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: isMuted ? 'mute' : 'unMute',
+          args: []
+        }), '*');
+      }, 1000);
+
+      setTimeout(() => {
         const btn = document.getElementById('enterBtn');
+        btn.classList.add('visible');
         btn.disabled = false;
       }, 5000);
     });
   </script>
-
 </body>
 </html>
