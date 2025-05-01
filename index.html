@@ -97,7 +97,7 @@
   <!-- ฉากหลัง YouTube (ครอปเต็มจอ) -->
   <div class="fullscreen-bg">
     <iframe 
-      src="https://www.youtube.com/embed/xLo-BrCh7JQ?autoplay=1&controls=0&mute=1&loop=1&playlist=xLo-BrCh7JQ&modestbranding=1&showinfo=0&rel=0"
+      src="https://www.youtube.com/embed/xLo-BrCh7JQ?autoplay=1&controls=0&mute=1&loop=1&playlist=xLo-BrCh7JQ&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
       frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
     </iframe>
   </div>
@@ -123,6 +123,37 @@
         document.getElementById('main').style.pointerEvents = 'auto';
       }, 1000);
     }
+    let isMuted = true; // เปลี่ยนเป็น false ถ้าอยากเริ่มแบบเปิดเสียง
+
+function toggleSound() {
+  const iframe = document.querySelector('iframe');
+  const btn = document.getElementById('soundToggle');
+
+  // สลับสถานะเสียง
+  isMuted = !isMuted;
+
+  // ส่งคำสั่งไปยัง YouTube player
+  iframe.contentWindow.postMessage(JSON.stringify({
+    event: 'command',
+    func: isMuted ? 'mute' : 'unMute',
+    args: []
+  }), '*');
+
+  btn.innerText = isMuted ? '🔇 ปิดเสียง' : '🔊 เปิดเสียง';
+}
+
+// ตั้งค่าเริ่มต้น (mute)
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const iframe = document.querySelector('iframe');
+    iframe.contentWindow.postMessage(JSON.stringify({
+      event: 'command',
+      func: isMuted ? 'mute' : 'unMute',
+      args: []
+    }), '*');
+  }, 1000);
+});
+
 
     // ถ่วงเวลา 5 วิ ก่อนเปิดให้กดปุ่ม
     window.addEventListener('load', () => {
