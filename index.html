@@ -35,12 +35,17 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: rgba(0,0,0,0.6);
       color: white;
       transition: opacity 1s ease;
     }
 
+    #welcome {
+      background: url('https://i.pinimg.com/originals/4e/98/51/4e9851eedd0e229bf4a9fb4c85207b93.gif') center center / cover no-repeat;
+      z-index: 10;
+    }
+
     #main {
+      background: rgba(0,0,0,0.4);
       opacity: 0;
       pointer-events: none;
     }
@@ -50,27 +55,34 @@
       font-size: 18px;
       margin-top: 20px;
       cursor: pointer;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid white;
+      color: white;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
   </style>
 </head>
 <body>
 
-  <!-- 🎬 ฉากหลัง YouTube -->
+  <!-- ฉากหลัง YouTube -->
   <div class="fullscreen-bg">
     <iframe src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID?autoplay=1&controls=0&mute=1&loop=1&playlist=YOUTUBE_VIDEO_ID&modestbranding=1&showinfo=0&rel=0" 
       frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
   </div>
 
-  <!-- 🎉 หน้า Welcome -->
+  <!-- หน้า Welcome -->
   <div id="welcome">
     <h1>ยินดีต้อนรับ สู่ SaraNekoTH fanpage</h1>
     <button onclick="enterSite()">เข้าสู่เว็บไซต์</button>
   </div>
 
-  <!-- 🧭 หน้าเพจหลัก -->
+  <!-- หน้าเพจหลัก -->
   <div id="main">
     <h1>นี่คือหน้าเว็บหลักของเรา</h1>
-    <p>จะแต่งอะไรต่อก็เชิญเลย!</p>
+    <p>ยินดีต้อนรับอย่างเป็นทางการ!</p>
   </div>
 
   <script>
@@ -80,7 +92,7 @@
       setTimeout(() => {
         document.getElementById('main').style.opacity = '1';
         document.getElementById('main').style.pointerEvents = 'auto';
-      }, 1000); // รอให้ fade ออกก่อน แล้วค่อย fade เข้า
+      }, 1000);
     }
   </script>
 
