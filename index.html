@@ -41,33 +41,16 @@
       z-index: 1;
     }
 
-    #welcome {
-  background: url('https://i.pinimg.com/originals/4e/98/51/4e9851eedd0e229bf4a9fb4c85207b93.gif') center center / cover no-repeat;
-  z-index: 10;
-  position: relative; /* ทำให้ข้อความใน welcome อยู่เหนือพื้นหลัง */
-}
-
-#welcome::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: inherit; /* ใช้พื้นหลังเดียวกับ #welcome */
-  filter: blur(5px); /* เพิ่ม blur ที่พื้นหลัง */
-  z-index: -1; /* ให้พื้นหลังเบลออยู่ข้างหลังข้อความ */
-}
-
-#welcome h1 {
-  position: relative; /* ให้ข้อความอยู่เหนือพื้นหลัง */
-  z-index: 20; /* ทำให้ข้อความอยู่เหนือพื้นหลังที่เบลอ */
-}
-
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    #welcome, #main {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      transition: opacity 1s ease;
     }
 
     #welcome h1 {
@@ -76,6 +59,18 @@
       animation-delay: 1s;
       position: relative;
       z-index: 20;
+    }
+
+    #welcome {
+      background: url('https://i.pinimg.com/originals/4e/98/51/4e9851eedd0e229bf4a9fb4c85207b93.gif') center center / cover no-repeat;
+      z-index: 2;
+      filter: blur(10px);
+      position: relative;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     #enterBtn {
