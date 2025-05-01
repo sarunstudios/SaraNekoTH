@@ -22,8 +22,12 @@
     }
 
     .fullscreen-bg iframe {
-      width: 100vw;
-      height: 100vh;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120vw;
+      height: 120vh;
+      transform: translate(-50%, -50%);
       pointer-events: none;
     }
 
@@ -73,10 +77,12 @@
 </head>
 <body>
 
-  <!-- ฉากหลัง YouTube -->
+  <!-- ฉากหลัง YouTube (ครอปเต็มจอ) -->
   <div class="fullscreen-bg">
-    <iframe src="https://www.youtube.com/embed/m25ppbdW5Kc?autoplay=1&controls=0&mute=1&loop=1&playlist=m25ppbdW5Kc&modestbranding=1&showinfo=0&rel=0" 
-      frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <iframe 
+      src="https://www.youtube.com/embed/xLo-BrCh7JQ?autoplay=1&controls=0&mute=1&loop=1&playlist=xLo-BrCh7JQ&modestbranding=1&showinfo=0&rel=0"
+      frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+    </iframe>
   </div>
 
   <!-- หน้า Welcome -->
