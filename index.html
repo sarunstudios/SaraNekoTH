@@ -31,7 +31,6 @@
       pointer-events: none;
     }
 
-    /* เบลอเฉพาะหน้า welcome */
     .fullscreen-bg::after {
       content: "";
       position: absolute;
@@ -128,30 +127,63 @@
 <body>
   <button id="soundToggle" onclick="toggleSound()">🔇 ปิดเสียง</button>
 
-  <!-- ฉากหลัง YouTube (ครอปเต็มจอ) -->
   <div class="fullscreen-bg">
-    <iframe 
-      id="bgVideo"
-      src="https://www.youtube.com/embed/xLo-BrCh7JQ?autoplay=1&controls=0&mute=1&loop=1&playlist=xLo-BrCh7JQ&modestbranding=1&showinfo=0&rel=0&enablejsapi=1"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
+    <div id="yt-bg"></div>
   </div>
 
-  <!-- หน้า Welcome -->
   <div id="welcome">
     <h1>ยินดีต้อนรับ สู่ SaraNekoTH fanpage</h1>
     <button id="enterBtn" onclick="enterSite()" disabled>เข้าสู่เว็บไซต์</button>
   </div>
 
-  <!-- หน้าเพจหลัก -->
   <div id="main">
     <h1>นี่คือหน้าเว็บหลักของเรา</h1>
     <p>ยินดีต้อนรับอย่างเป็นทางการ!</p>
   </div>
 
+  <!-- โหลด YouTube API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
+    let player;
+    let isMuted = true;
+
+    // ฟังก์ชันนี้จะถูกเรียกโดย YouTube API อัตโนมัติ
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('yt-bg', {
+        videoId: 'xLo-BrCh7JQ',
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          mute: 1,
+          loop: 1,
+          playlist: 'xLo-BrCh7JQ',
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0
+        },
+        events: {
+          onReady: (event) => {
+            player.setVolume(50);
+            player.mute();
+          }
+        }
+      });
+    }
+
+    function toggleSound() {
+      if (!player) return;
+      const btn = document.getElementById('soundToggle');
+      isMuted = !isMuted;
+      if (isMuted) {
+        player.mute();
+        btn.innerText = '🔇 ปิดเสียง';
+      } else {
+        player.unMute();
+        player.setVolume(50);
+        btn.innerText = '🔊 เปิดเสียง';
+      }
+    }
+
     function enterSite() {
       document.getElementById('welcome').style.opacity = '0';
       document.getElementById('welcome').style.pointerEvents = 'none';
@@ -161,35 +193,7 @@
       }, 1000);
     }
 
-    // --- ควบคุมเสียงแบบปรับความดังได้ ---
-    let isMuted = true;
-    let currentVolume = 50; // เริ่มต้นที่ 50%
-
-    function setVolume(vol) {
-      const iframe = document.getElementById('bgVideo');
-      iframe.contentWindow.postMessage(JSON.stringify({
-        event: 'command',
-        func: 'setVolume',
-        args: [vol]
-      }), '*');
-    }
-
-    function toggleSound() {
-      const btn = document.getElementById('soundToggle');
-      isMuted = !isMuted;
-      currentVolume = isMuted ? 0 : 50;
-      setVolume(currentVolume);
-      btn.innerText = isMuted ? '🔇 ปิดเสียง' : '🔊 เปิดเสียง';
-    }
-
-    // ตั้งค่า volume หลังโหลด
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        setVolume(currentVolume);
-      }, 1500);
-    });
-
-    // ปลดล็อกปุ่มเข้าสู่เว็บไซต์หลัง 5 วิ
+    // ปลดล็อกปุ่มเข้าเว็บ
     window.addEventListener('load', () => {
       setTimeout(() => {
         const btn = document.getElementById('enterBtn');
