@@ -58,10 +58,16 @@
       background: rgba(0, 0, 0, 0.5);
       border: 1px solid white;
       color: white;
+      opacity: 0.5;
+      transition: opacity 0.5s ease;
     }
 
-    button:hover {
-      background: rgba(255, 255, 255, 0.2);
+    button:enabled {
+      opacity: 1;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -69,14 +75,14 @@
 
   <!-- ฉากหลัง YouTube -->
   <div class="fullscreen-bg">
-    <iframe src="https://www.youtube.com/embed/m25ppbdW5Kc?autoplay=1&controls=0&mute=1&loop=1&playlist=m25ppbdW5Kc&modestbranding=1&showinfo=0&rel=0" 
+    <iframe src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID?autoplay=1&controls=0&mute=1&loop=1&playlist=YOUTUBE_VIDEO_ID&modestbranding=1&showinfo=0&rel=0" 
       frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
   </div>
 
   <!-- หน้า Welcome -->
   <div id="welcome">
     <h1>ยินดีต้อนรับ สู่ SaraNekoTH fanpage</h1>
-    <button onclick="enterSite()">เข้าสู่เว็บไซต์</button>
+    <button id="enterBtn" onclick="enterSite()" disabled>เข้าสู่เว็บไซต์</button>
   </div>
 
   <!-- หน้าเพจหลัก -->
@@ -94,6 +100,14 @@
         document.getElementById('main').style.pointerEvents = 'auto';
       }, 1000);
     }
+
+    // ถ่วงเวลา 5 วิ ก่อนเปิดให้กดปุ่ม
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const btn = document.getElementById('enterBtn');
+        btn.disabled = false;
+      }, 5000);
+    });
   </script>
 
 </body>
