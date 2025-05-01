@@ -21,30 +21,40 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 177.77vh;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       z-index: -1;
       pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* ทำให้วิดีโอขยายเต็มจอและไม่เหลือขอบดำ */
+    #ytplayer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     /* Welcome screen */
     #welcome {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url('https://i.pinimg.com/originals/4e/98/51/4e9851eedd0e229bf4a9fb4c85207b93.gif');
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 1s;
-    z-index: 2;
-  }
-
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url('https://i.pinimg.com/originals/4e/98/51/4e9851eedd0e229bf4a9fb4c85207b93.gif');
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1s;
+      z-index: 2;
+    }
 
     #introText {
       text-align: center;
@@ -134,7 +144,6 @@
     </div>
     <button id="enterBtn" onclick="enterSite()">เข้าสู่เว็บไซต์</button>
   </div>
-
 
   <!-- หน้า Main -->
   <div id="main">
