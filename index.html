@@ -1,12 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>เว็บแรกของแต้</title>
+  <title>SaraNekoTH Fanpage</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      font-family: sans-serif;
+    }
+
+    .fullscreen-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .fullscreen-bg iframe {
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+    }
+
+    #welcome, #main {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      transition: opacity 1s ease;
+    }
+
+    #main {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <h1>สวัสดี! นี่คือเว็บแรกของแต้ 🚀</h1>
-  <p>สร้างด้วยน้ำพักน้ำแรง และกาแฟ 2 แก้ว ☕☕</p>
+
+  <!-- 🎬 ฉากหลัง YouTube -->
+  <div class="fullscreen-bg">
+    <iframe src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID?autoplay=1&controls=0&mute=1&loop=1&playlist=YOUTUBE_VIDEO_ID&modestbranding=1&showinfo=0&rel=0" 
+      frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
+
+  <!-- 🎉 หน้า Welcome -->
+  <div id="welcome">
+    <h1>ยินดีต้อนรับ สู่ SaraNekoTH fanpage</h1>
+    <button onclick="enterSite()">เข้าสู่เว็บไซต์</button>
+  </div>
+
+  <!-- 🧭 หน้าเพจหลัก -->
+  <div id="main">
+    <h1>นี่คือหน้าเว็บหลักของเรา</h1>
+    <p>จะแต่งอะไรต่อก็เชิญเลย!</p>
+  </div>
+
+  <script>
+    function enterSite() {
+      document.getElementById('welcome').style.opacity = '0';
+      document.getElementById('welcome').style.pointerEvents = 'none';
+      setTimeout(() => {
+        document.getElementById('main').style.opacity = '1';
+        document.getElementById('main').style.pointerEvents = 'auto';
+      }, 1000); // รอให้ fade ออกก่อน แล้วค่อย fade เข้า
+    }
+  </script>
+
 </body>
 </html>
