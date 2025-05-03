@@ -169,6 +169,12 @@
         bottom: 80px;
       }
     }
+
+    /* ลดความเบลอเมื่อ UI ถูกซ่อน */
+    .blurred {
+      filter: blur(5px);
+    }
+
   </style>
 </head>
 <body>
@@ -216,6 +222,7 @@
   <script>
     let player;
     let isMuted = true;
+    let isUIHidden = false;
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('yt-bg', {
@@ -264,14 +271,15 @@
 
     function toggleUI() {
       const elements = ['welcome', 'main', 'enterBtn', 'soundToggle', 'toggleUIBtn', 'dynmapBtn', 'dynmapPopup'];
-      const isVisible = document.getElementById('main').style.display !== 'none';
+      isUIHidden = !isUIHidden;
       elements.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
-          el.style.display = isVisible ? 'none' : '';
+          el.style.display = isUIHidden ? 'none' : '';
         }
       });
-      document.querySelector('.fullscreen-bg').style.filter = isVisible ? 'blur(0px)' : 'blur(10px)';
+      document.querySelector('.fullscreen-bg').style.filter = isUIHidden ? 'blur(10px)' : 'blur(0px)';
+      document.body.classList.toggle('blurred', isUIHidden); // ลดความเบลอที่ส่วนอื่น ๆ ของเว็บ
     }
 
     function toggleDynmap() {
