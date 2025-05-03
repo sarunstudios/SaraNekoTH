@@ -23,8 +23,9 @@
 
     .fullscreen-bg iframe {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 177.77vh;
       height: 100vh;
       min-width: 100vw;
@@ -263,12 +264,14 @@
 
     function toggleUI() {
       const elements = ['welcome', 'main', 'enterBtn', 'soundToggle', 'toggleUIBtn', 'dynmapBtn', 'dynmapPopup'];
+      const isVisible = document.getElementById('main').style.display !== 'none';
       elements.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
-          el.style.display = (el.style.display === 'none') ? '' : 'none';
+          el.style.display = isVisible ? 'none' : '';
         }
       });
+      document.querySelector('.fullscreen-bg').style.filter = isVisible ? 'blur(0px)' : 'blur(10px)';
     }
 
     function toggleDynmap() {
