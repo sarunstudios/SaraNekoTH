@@ -21,6 +21,15 @@
       overflow: hidden;
     }
 
+    .fullscreen-bg img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(5px);
+      z-index: -2;
+    }
+
     .fullscreen-bg iframe {
       position: absolute;
       top: 50%;
@@ -38,7 +47,7 @@
       width: 100%;
       height: 100%;
       backdrop-filter: blur(5px);
-      background: rgba(0, 0, 0, 0.2); /* Fallback for unsupported browsers */
+      background: rgba(0, 0, 0, 0.2);
       z-index: 1;
     }
 
@@ -55,7 +64,6 @@
     }
 
     #welcome {
-      background: url('https://i.pinimg.com/originals/4e/98/51/4e9851eedd0e229bf4a9fb4c85207b93.gif') center center / cover no-repeat;
       z-index: 2;
     }
 
@@ -114,7 +122,6 @@
       color: white;
       opacity: 0.5;
       transition: opacity 0.5s ease;
-      aria-label: "Button";
     }
 
     button:enabled {
@@ -127,15 +134,17 @@
   </style>
 </head>
 <body>
-  <button id="soundToggle" onclick="toggleSound()">🔇 ปิดเสียง</button>
+  <button id="soundToggle" onclick="toggleSound()" aria-label="ปุ่มเปิดปิดเสียง">🔇 ปิดเสียง</button>
 
   <div class="fullscreen-bg">
+    <!-- Fallback BG เผื่อวิดีโอไม่เล่น -->
+    <img src="https://i.pinimg.com/originals/4e/98/51/4e9851eedd0e229bf4a9fb4c85207b93.gif" alt="Fallback Background">
     <div id="yt-bg"></div>
   </div>
 
   <div id="welcome">
     <h1>ยินดีต้อนรับทุกท่าน สู่เว็บเพจของเรา</h1>
-    <button id="enterBtn" onclick="enterSite()" disabled>เข้าสู่เว็บไซต์</button>
+    <button id="enterBtn" onclick="enterSite()" disabled aria-label="ปุ่มเข้าสู่เว็บไซต์">เข้าสู่เว็บไซต์</button>
   </div>
 
   <div id="main">
@@ -144,7 +153,6 @@
     <p>เราขอและหวังใว้เป็นอย่างยิ่ง ว่าพวกท่านจะมาอย่างเป็นมิตร ไม่สร้างความเสียหายหรือความเดือดร้อนให้แก่พวกเรา</p>
     <p>"พวกเราแค่ต้องการเล่นเกมด้วยกัน ไม่ได้มาเพื่อสร้างศัตรูต่อกัน"</p>
     <p>หากท่านมีข้อสงสัย สามารถติดต่อได้ที่ <a href="https://www.facebook.com/BossjaeTH" target="_blank" style="color: #00f;">Facebook</a> หรือ <a href="https://discord.gg/A5XZFt7kjc" target="_blank" style="color: #00f;">Discord</a></p>
-    
   </div>
 
   <!-- โหลด YouTube API -->
@@ -153,7 +161,6 @@
     let player;
     let isMuted = true;
 
-    // ฟังก์ชันนี้จะถูกเรียกโดย YouTube API อัตโนมัติ
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('yt-bg', {
         videoId: 'JBoUwElRFVM',
@@ -199,13 +206,13 @@
       }, 1000);
     }
 
-    // ปลดล็อกปุ่มเข้าเว็บ
+    // ปลดล็อกปุ่มหลังโหลด 3 วินาที
     window.addEventListener('load', () => {
       setTimeout(() => {
         const btn = document.getElementById('enterBtn');
         btn.disabled = false;
         btn.classList.add('visible');
-      }, 5000);
+      }, 3000);
     });
   </script>
 </body>
