@@ -19,6 +19,7 @@
       height: 100%;
       z-index: -1;
       overflow: hidden;
+      transition: filter 0.5s ease;
     }
 
     .fullscreen-bg iframe {
@@ -42,6 +43,12 @@
       backdrop-filter: blur(5px);
       background: rgba(0, 0, 0, 0.2);
       z-index: 1;
+      transition: backdrop-filter 0.5s ease, background 0.5s ease;
+    }
+
+    .fullscreen-bg.no-blur::after {
+      backdrop-filter: blur(2px);
+      background: rgba(0, 0, 0, 0.1);
     }
 
     #welcome, #main {
@@ -108,7 +115,7 @@
       opacity: 0.5;
     }
 
-    #soundToggle, #toggleUIBtn {
+    #soundToggle {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -116,8 +123,10 @@
     }
 
     #toggleUIBtn {
+      position: fixed;
       top: 20px;
-      bottom: auto;
+      right: 20px;
+      z-index: 9999; /* สูงกว่าทุกปุ่ม */
     }
 
     #dynmapBtn {
@@ -128,7 +137,6 @@
       z-index: 20;
     }
 
-    /* Dynmap popup */
     #dynmapPopup {
       position: fixed;
       top: 50%;
@@ -171,26 +179,18 @@
       }
     }
 
-    /* ลดความเบลอเมื่อ UI ถูกซ่อน */
-    .blurred {
-      filter: blur(5px);
-    }
-
   </style>
 </head>
 <body>
-  <!-- วิดีโอพื้นหลัง -->
-  <div class="fullscreen-bg">
+  <div class="fullscreen-bg" id="bg-container">
     <div id="yt-bg"></div>
   </div>
 
-  <!-- หน้า welcome -->
   <div id="welcome">
     <h1>ยินดีต้อนรับทุกท่าน สู่เว็บเพจของเรา</h1>
     <button id="enterBtn" onclick="enterSite()" disabled>เข้าสู่เว็บไซต์</button>
   </div>
 
-  <!-- หน้า main -->
   <div id="main">
     <h1>ตรงนี้จะเป็นเว็บหลักใว้เก็บข้อมูลว่าเรามีอะไร</h1>
     <p>ในอนาคต เราจะเพิ่ม IP เซิฟเวอร์, version เกม, และลิ้งค์ดาวน์โหลดใว้ที่นี่ หากพวกท่านสนใจจะเล่นกับเรา!</p>
@@ -201,23 +201,18 @@
       หรือ 
       <a href="https://discord.gg/A5XZFt7kjc" target="_blank" style="color: #00f;">Discord</a>
     </p>
-      <!-- ปุ่มควบคุมเสียง -->
-      <button id="soundToggle" onclick="toggleSound()">🔇 ปิดเสียง</button>
 
-  <!-- ปุ่มซ่อน UI -->
-      <button id="toggleUIBtn" onclick="toggleUI()">⧉ ซ่อน UI</button>
-
-  <!-- ปุ่ม Dynmap -->
-      <button id="dynmapBtn" onclick="toggleDynmap()">🗺️</button>
-
-  <!-- Dynmap popup -->
+    <button id="soundToggle" onclick="toggleSound()">🔇 ปิดเสียง</button>
+    <button id="dynmapBtn" onclick="toggleDynmap()">🗺️</button>
     <div id="dynmapPopup">
       <button id="closeDynmap" onclick="toggleDynmap()">❌</button>
       <iframe src="http://sv1.mc4.in:20382"></iframe>
     </div>
   </div>
 
-  <!-- YouTube API -->
+  <!-- ปุ่มซ่อน UI วางไว้นอก #main เพื่อไม่หาย -->
+  <button id="toggleUIBtn" onclick="toggleUI()">⧉ ซ่อน UI</button>
+
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     let player;
@@ -270,25 +265,27 @@
     }
 
     function toggleUI() {
-  const elements = ['welcome', 'main', 'enterBtn', 'soundToggle', 'dynmapBtn', 'dynmapPopup'];
-  isUIHidden = !isUIHidden;
+      const elements = ['welcome', 'main', 'enterBtn', 'soundToggle', 'dynmapBtn', 'dynmapPopup'];
+      isUIHidden = !isUIHidden;
 
-  // ซ่อน/แสดง UI ยกเว้นปุ่ม toggleUIBtn
-  elements.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.style.display = isUIHidden ? 'none' : '';
+      elements.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.style.display = isUIHidden ? 'none' : '';
+        }
+      });
+
+      const toggleBtn = document.getElementById('toggleUIBtn');
+      toggleBtn.innerText = isUIHidden ? '⧉ แสดง UI' : '⧉ ซ่อน UI';
+
+      // เปลี่ยนคลาสเพื่อลดเบลอ
+      const bgContainer = document.getElementById('bg-container');
+      if (isUIHidden) {
+        bgContainer.classList.add('no-blur');
+      } else {
+        bgContainer.classList.remove('no-blur');
+      }
     }
-  });
-
-  // ปุ่ม toggleUIBtn ต้องอยู่เสมอ!
-  const toggleBtn = document.getElementById('toggleUIBtn');
-  toggleBtn.innerText = isUIHidden ? '⧉ แสดง UI' : '⧉ ซ่อน UI';
-
-  // ลดความเบลอเมื่อซ่อน UI / กลับมาชัดเมื่อแสดง UI
-  const bg = document.querySelector('.fullscreen-bg');
-  bg.style.filter = isUIHidden ? 'blur(2px)' : 'blur(5px)';
-}
 
     function toggleDynmap() {
       const popup = document.getElementById('dynmapPopup');
@@ -305,3 +302,9 @@
   </script>
 </body>
 </html>
+<!-- End of index.html -->
+<!--
+  This HTML file is a simple web page that serves as a fan page for "SaraNekoTH".
+  It includes a YouTube video background, a welcome message, and buttons to enter the site and toggle sound.
+  The page also has a dynamic map feature that can be toggled on and off.
+  The design is responsive and includes animations for a better user experience.
