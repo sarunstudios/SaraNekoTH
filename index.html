@@ -205,7 +205,7 @@
       <button id="soundToggle" onclick="toggleSound()">🔇 ปิดเสียง</button>
 
   <!-- ปุ่มซ่อน UI -->
-      <button id="toggleUIBtn" onclick="toggleUI()">👁️ ซ่อน UI</button>
+      <button id="toggleUIBtn" onclick="toggleUI()">⧉ ซ่อน UI</button>
 
   <!-- ปุ่ม Dynmap -->
       <button id="dynmapBtn" onclick="toggleDynmap()">🗺️</button>
@@ -270,17 +270,25 @@
     }
 
     function toggleUI() {
-      const elements = ['welcome', 'main', 'enterBtn', 'soundToggle', 'toggleUIBtn', 'dynmapBtn', 'dynmapPopup'];
-      isUIHidden = !isUIHidden;
-      elements.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.style.display = isUIHidden ? 'none' : '';
-        }
-      });
-      document.querySelector('.fullscreen-bg').style.filter = isUIHidden ? 'blur(10px)' : 'blur(0px)';
-      document.body.classList.toggle('blurred', isUIHidden); // ลดความเบลอที่ส่วนอื่น ๆ ของเว็บ
+  const elements = ['welcome', 'main', 'enterBtn', 'soundToggle', 'dynmapBtn', 'dynmapPopup'];
+  isUIHidden = !isUIHidden;
+
+  // ซ่อน/แสดง UI ยกเว้นปุ่ม toggleUIBtn
+  elements.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = isUIHidden ? 'none' : '';
     }
+  });
+
+  // ปุ่ม toggleUIBtn ต้องอยู่เสมอ!
+  const toggleBtn = document.getElementById('toggleUIBtn');
+  toggleBtn.innerText = isUIHidden ? '⧉ แสดง UI' : '⧉ ซ่อน UI';
+
+  // ลดความเบลอเมื่อซ่อน UI / กลับมาชัดเมื่อแสดง UI
+  const bg = document.querySelector('.fullscreen-bg');
+  bg.style.filter = isUIHidden ? 'blur(2px)' : 'blur(5px)';
+}
 
     function toggleDynmap() {
       const popup = document.getElementById('dynmapPopup');
