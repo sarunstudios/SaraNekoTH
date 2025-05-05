@@ -178,21 +178,6 @@
   </style>
 </head>
 <body>
-  <!-- ปุ่มควบคุมเสียง -->
-  <button id="soundToggle" onclick="toggleSound()">🔇 ปิดเสียง</button>
-
-  <!-- ปุ่มซ่อน UI -->
-  <button id="toggleUIBtn" onclick="toggleUI()">👁️ ซ่อน UI</button>
-
-  <!-- ปุ่ม Dynmap -->
-  <button id="dynmapBtn" onclick="toggleDynmap()">🗺️</button>
-
-  <!-- Dynmap popup -->
-  <div id="dynmapPopup">
-    <button id="closeDynmap" onclick="toggleDynmap()">❌</button>
-    <iframe src="http://sv1.mc4.in:20382"></iframe>
-  </div>
-
   <!-- วิดีโอพื้นหลัง -->
   <div class="fullscreen-bg">
     <div id="yt-bg"></div>
@@ -215,6 +200,20 @@
       หรือ 
       <a href="https://discord.gg/A5XZFt7kjc" target="_blank" style="color: #00f;">Discord</a>
     </p>
+      <!-- ปุ่มควบคุมเสียง -->
+      <button id="soundToggle" onclick="toggleSound()">🔇 ปิดเสียง</button>
+
+  <!-- ปุ่มซ่อน UI -->
+      <button id="toggleUIBtn" onclick="toggleUI()">👁️ ซ่อน UI</button>
+
+  <!-- ปุ่ม Dynmap -->
+      <button id="dynmapBtn" onclick="toggleDynmap()">🗺️</button>
+
+  <!-- Dynmap popup -->
+    <div id="dynmapPopup">
+      <button id="closeDynmap" onclick="toggleDynmap()">❌</button>
+      <iframe src="http://sv1.mc4.in:20382"></iframe>
+    </div>
   </div>
 
   <!-- YouTube API -->
@@ -226,13 +225,13 @@
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('yt-bg', {
-        videoId: 'JBoUwElRFVM',
+        videoId: '0EWcxtOAJE4',
         playerVars: {
           autoplay: 1,
           controls: 0,
           mute: 1,
           loop: 1,
-          playlist: 'JBoUwElRFVM',
+          playlist: '0EWcxtOAJE4',
           modestbranding: 1,
           rel: 0,
           showinfo: 0
