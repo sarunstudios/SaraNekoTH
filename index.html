@@ -202,7 +202,7 @@
       <a href="https://discord.gg/A5XZFt7kjc" target="_blank" style="color: #00f;">Discord</a>
     </p>
 
-    <button id="soundToggle" onclick="toggleSound()">🔇 ปิดเสียง</button>
+    <button id="soundToggle" onclick="toggleSound()">🔇</button>
     <button id="dynmapBtn" onclick="toggleDynmap()">🗺️</button>
     <div id="dynmapPopup">
       <button id="closeDynmap" onclick="toggleDynmap()">❌</button>
@@ -211,7 +211,7 @@
   </div>
 
   <!-- ปุ่มซ่อน UI วางไว้นอก #main เพื่อไม่หาย -->
-  <button id="toggleUIBtn" onclick="toggleUI()">⧉ ซ่อน UI</button>
+  <button id="toggleUIBtn" onclick="toggleUI()">⧉</button>
 
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
@@ -276,7 +276,7 @@
       });
 
       const toggleBtn = document.getElementById('toggleUIBtn');
-      toggleBtn.innerText = isUIHidden ? '⧉ แสดง UI' : '⧉ ซ่อน UI';
+      toggleBtn.innerText = isUIHidden ? '⧉' : '⧉';
 
       // เปลี่ยนคลาสเพื่อลดเบลอ
       const bgContainer = document.getElementById('bg-container');
