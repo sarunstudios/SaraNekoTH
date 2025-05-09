@@ -153,10 +153,11 @@
         font-size: 1.5rem;
       }
     }
-    #joinGameBtn {
+#joinGameBtn {
   position: fixed;
-  bottom: 90px; /* อยู่เหนือ Dynmap หน่อย จะไม่ทับกัน */
-  left: 20px;
+  bottom: 20px; /* ใส่ระยะจากด้านล่าง */
+  left: 50%; /* กำหนดตำแหน่งจากด้านซ้ายให้เป็น 50% ของหน้าจอ */
+  transform: translateX(-50%); /* เคลื่อนที่กลับไปครึ่งหนึ่งเพื่อให้ตรงกลาง */
   z-index: 20;
   font-size: clamp(1.5rem, 3vw, 3rem);
   padding: 0.5em;
@@ -196,7 +197,7 @@
 
     <button id="soundToggle" onclick="toggleSound()" title="เปิด/ปิดเสียง">🔇</button>
     <button id="dynmapBtn" onclick="openDynmap()" title="เปิดแผนที่ Dynmap">🗺️</button>
-    <button id="joinGameBtn" onclick="joinGame()" title="เข้าร่วมเกม">🎮</button>
+    <button id="joinGameBtn" onclick="joinGame()" title="เข้าร่วมเกม">🎮 เข้าร่วมเกม</button>
   </div>
 
   <button id="toggleUIBtn" onclick="toggleUI()">⧉</button>
