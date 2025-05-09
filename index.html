@@ -153,6 +153,25 @@
         font-size: 1.5rem;
       }
     }
+    #joinGameBtn {
+  position: fixed;
+  bottom: 90px; /* อยู่เหนือ Dynmap หน่อย จะไม่ทับกัน */
+  left: 20px;
+  z-index: 20;
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  padding: 0.5em;
+  background: rgba(0, 102, 255, 0.6);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#joinGameBtn:hover {
+  background: rgba(0, 102, 255, 0.3);
+}
+
   </style>
 </head>
 <body>
@@ -177,6 +196,7 @@
 
     <button id="soundToggle" onclick="toggleSound()" title="เปิด/ปิดเสียง">🔇</button>
     <button id="dynmapBtn" onclick="openDynmap()" title="เปิดแผนที่ Dynmap">🗺️</button>
+    <button id="joinGameBtn" onclick="joinGame()" title="เข้าร่วมเกม">🎮</button>
   </div>
 
   <button id="toggleUIBtn" onclick="toggleUI()">⧉</button>
@@ -221,6 +241,10 @@
         player.setVolume(20);
         btn.innerText = '🔊';
       }
+    }
+
+    function joinGame() {
+      window.open('https://mc.in.th/saranekoth', '_blank');
     }
 
     function enterSite() {
@@ -268,3 +292,8 @@
   </script>
 </body>
 </html>
+<!--
+  This HTML file is a simple landing page for a fanpage of "SaraNekoTH".
+  It includes a YouTube video as a background, a welcome message, and buttons to enter the site and toggle sound.
+  The page is styled with CSS for a modern look and responsive design.
+  The JavaScript handles the YouTube API, sound toggling, and UI interactions.
