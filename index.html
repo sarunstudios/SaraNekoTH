@@ -5,17 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BlueArchiveTH</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       width: 100%;
       height: 100%;
       overflow: hidden;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: black;
     }
 
     #intro, #main {
@@ -38,11 +34,11 @@
       text-align: center;
     }
 
-    iframe {
+    #bg-video {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      border: none;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
       z-index: -1;
     }
 
@@ -106,32 +102,31 @@
     }
 
     @media screen and (min-width: 2560px) {
-      h1 {
-        font-size: 4rem;
-      }
-      button, a#dynmapBtn {
-        font-size: 1.75rem;
-      }
+      h1 { font-size: 4rem; }
+      button, a#dynmapBtn { font-size: 1.75rem; }
     }
 
     @media screen and (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-      #main p {
-        font-size: 1rem;
-        padding: 0 10px;
-      }
-      button, a#dynmapBtn {
-        font-size: 1rem;
-        padding: 10px 15px;
-      }
+      h1 { font-size: 2rem; }
+      #main p { font-size: 1rem; padding: 0 10px; }
+      button, a#dynmapBtn { font-size: 1rem; padding: 10px 15px; }
     }
   </style>
 </head>
 <body>
   <div id="intro">
-    <iframe src="https://www.youtube.com/embed/FuPdiH4NFGs?autoplay=1&controls=0&loop=1&playlist=FuPdiH4NFGs&mute=1" allow="autoplay"></iframe>
+    <!-- YouTube iframe BG แบบทำงานจริง! -->
+    <div id="bg-video">
+      <iframe
+        width="100%"
+        height="100%"
+        src="https://www.youtube.com/embed/FuPdiH4NFGs?autoplay=1&mute=1&controls=0&showinfo=0&loop=1&playlist=FuPdiH4NFGs&modestbranding=1"
+        frameborder="0"
+        allow="autoplay"
+        allowfullscreen
+      ></iframe>
+    </div>
+
     <div class="overlay"></div>
     <h1>ยินดีต้อนรับสู่ BlueArchiveTH</h1>
     <button onclick="enterSite()">เข้าสู่หน้าเว็บ</button>
@@ -157,12 +152,11 @@
     }
 
     function toggleSound() {
-      const iframe = document.querySelector('iframe');
+      const iframe = document.querySelector('#bg-video iframe');
       const icon = document.getElementById('soundToggle');
       isMuted = !isMuted;
-
-      const src = iframe.src.split('?')[0];
-      iframe.src = `${src}?autoplay=1&controls=0&loop=1&playlist=FuPdiH4NFGs&mute=${isMuted ? 1 : 0}`;
+      const srcBase = "https://www.youtube.com/embed/FuPdiH4NFGs";
+      iframe.src = `${srcBase}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&showinfo=0&loop=1&playlist=FuPdiH4NFGs&modestbranding=1`;
       icon.textContent = isMuted ? '🔇' : '🔊';
     }
 
