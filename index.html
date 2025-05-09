@@ -1,265 +1,179 @@
-<!-- แทนที่ส่วนเดิมทั้งหมดใน index.html ด้วยโค้ดนี้ -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>SaraNekoTH Fanpage</title>
-  <link rel="icon" type="image/png" href="https://www.favicon.cc/logo3d/445732.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueArchiveTH</title>
   <style>
-    html, body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
       overflow: hidden;
-      height: 100%;
-      font-family: sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    .fullscreen-bg {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      overflow: hidden;
-      transition: filter 0.5s ease;
-    }
-
-    .fullscreen-bg iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 177.77vh;
-      height: 100vh;
-      min-width: 100vw;
-      min-height: 56.25vw;
-      pointer-events: none;
-    }
-
-    .fullscreen-bg::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(5px);
-      background: rgba(0, 0, 0, 0.2);
-      z-index: 1;
-      transition: backdrop-filter 0.5s ease, background 0.5s ease;
-    }
-
-    .fullscreen-bg.no-blur::after {
-      backdrop-filter: none;
-      background: none;
-    }
-
-    #welcome, #main {
+    #intro, #main {
       position: absolute;
       width: 100%;
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      transition: opacity 1s ease;
-      z-index: 5;
-    }
-
-    #welcome {
-      background: url('https://64.media.tumblr.com/b133335a7720015542f6de2225f65ece/6dba200f3854cb80-41/s540x810/f04d817b6104a5c68fe0568448d9485401ca3fb4.gif') center center / cover no-repeat;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    #welcome h1 {
-      opacity: 0;
-      animation: fadeIn 3s ease forwards;
-      animation-delay: 1s;
-      font-size: 3rem;
-    }
-
-    #enterBtn {
-      opacity: 0;
       transition: opacity 1s ease;
     }
 
-    #enterBtn.visible {
-      opacity: 1;
+    #intro {
+      z-index: 2;
     }
 
     #main {
-      background: rgba(0,0,0,0.4);
       opacity: 0;
-      pointer-events: none;
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 2vh;
+      text-align: center;
+    }
+
+    iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: none;
+      z-index: -1;
+    }
+
+    .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(8px);
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 0;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 4vw, 3.5rem);
+      color: white;
+      text-shadow: 2px 2px 5px #000;
+      margin-top: 10vh;
+    }
+
+    p {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: #ddd;
+      margin-top: 2vh;
+      padding: 0 5vw;
     }
 
     button, a#dynmapBtn {
-      padding: 10px 20px;
-      font-size: 1rem;
-      background: rgba(0, 0, 0, 0.6);
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      padding: clamp(8px, 2vw, 20px) clamp(15px, 4vw, 40px);
+      margin-top: 3vh;
       border: none;
-      color: white;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s ease;
+      display: inline-block;
       text-decoration: none;
-      transition: background 0.3s ease, opacity 0.5s ease;
     }
 
     button:hover, a#dynmapBtn:hover {
-      background: rgba(255,255,255,0.2);
+      background-color: rgba(255, 255, 255, 0.3);
     }
 
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-
-    #soundToggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 20;
-    }
-
-    #toggleUIBtn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
+    #soundToggle, #toggleUIBtn {
+      position: absolute;
+      top: 2vh;
+      right: 2vw;
+      font-size: 1.25rem;
+      padding: 10px 20px;
+      z-index: 10;
     }
 
     #dynmapBtn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      font-size: 2rem;
-      z-index: 20;
+      position: absolute;
+      bottom: 3vh;
+      right: 3vw;
+      z-index: 5;
     }
 
-    @media screen and (max-width: 500px) {
-      #dynmapBtn {
-        font-size: 1.5rem;
+    @media screen and (min-width: 2560px) {
+      h1 {
+        font-size: 4rem;
+      }
+      button, a#dynmapBtn {
+        font-size: 1.75rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      #main p {
+        font-size: 1rem;
+        padding: 0 10px;
+      }
+      button, a#dynmapBtn {
+        font-size: 1rem;
+        padding: 10px 15px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="fullscreen-bg" id="bg-container">
-    <div id="yt-bg"></div>
-  </div>
-
-  <div id="welcome">
-    <h1>ยินดีต้อนรับทุกท่าน สู่เว็บเพจของเรา</h1>
-    <button id="enterBtn" onclick="enterSite()" disabled>เข้าสู่เว็บไซต์</button>
+  <div id="intro">
+    <iframe src="https://www.youtube.com/embed/FuPdiH4NFGs?autoplay=1&controls=0&loop=1&playlist=FuPdiH4NFGs&mute=1" allow="autoplay"></iframe>
+    <div class="overlay"></div>
+    <h1>ยินดีต้อนรับสู่ BlueArchiveTH</h1>
+    <button onclick="enterSite()">เข้าสู่หน้าเว็บ</button>
+    <button id="soundToggle" onclick="toggleSound()">🔇</button>
   </div>
 
   <div id="main">
-    <h1>ตรงนี้จะเป็นเว็บหลักใว้เก็บข้อมูลว่าเรามีอะไร</h1>
-    <p>ในอนาคต เราจะเพิ่ม IP เซิฟเวอร์, version เกม, และลิ้งค์ดาวน์โหลดใว้ที่นี่ หากพวกท่านสนใจจะเล่นกับเรา!</p>
-    <p>เราขอและหวังใว้เป็นอย่างยิ่ง ว่าพวกท่านจะมาอย่างเป็นมิตร ไม่สร้างความเสียหายหรือความเดือดร้อนให้แก่พวกเรา</p>
-    <p>"พวกเราแค่ต้องการเล่นเกมด้วยกัน ไม่ได้มาเพื่อสร้างศัตรูต่อกัน"</p>
-    <p>หากท่านมีข้อสงสัย สามารถติดต่อได้ที่ 
-      <a href="https://www.facebook.com/BossjaeTH" target="_blank" style="color: #00f;">Facebook</a> 
-      หรือ 
-      <a href="https://discord.gg/A5XZFt7kjc" target="_blank" style="color: #00f;">Discord</a>
-    </p>
-
-    <button id="soundToggle" onclick="toggleSound()">🔇</button>
-    <button id="dynmapBtn" onclick="openDynmap()">🗺️</button>
+    <p>ขอบคุณที่เข้ามาเยี่ยมชม! อย่าลืมแวะดู Dynmap นะ</p>
+    <a id="dynmapBtn" href="http://saranekoth.mc.in.th:25009/" target="_blank">เปิด Dynmap</a>
+    <button id="toggleUIBtn" onclick="goBack()">ย้อนกลับ</button>
   </div>
 
-  <button id="toggleUIBtn" onclick="toggleUI()">⧉</button>
-
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    let player;
     let isMuted = true;
-    let isUIHidden = false;
-
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('yt-bg', {
-        videoId: '0EWcxtOAJE4',
-        playerVars: {
-          autoplay: 1,
-          controls: 0,
-          mute: 1,
-          loop: 1,
-          playlist: '0EWcxtOAJE4',
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0
-        },
-        events: {
-          onReady: () => {
-            player.setVolume(50);
-            player.mute();
-          }
-        }
-      });
-    }
-
-    function toggleSound() {
-      if (!player) return;
-      const btn = document.getElementById('soundToggle');
-      isMuted = !isMuted;
-      if (isMuted) {
-        player.mute();
-        btn.innerText = '🔇';
-      } else {
-        player.unMute();
-        player.setVolume(20);
-        btn.innerText = '🔊';
-      }
-    }
 
     function enterSite() {
-      document.getElementById('welcome').style.opacity = '0';
-      document.getElementById('welcome').style.pointerEvents = 'none';
+      document.getElementById('intro').style.opacity = '0';
+      document.getElementById('main').style.opacity = '1';
       setTimeout(() => {
-        document.getElementById('main').style.opacity = '1';
-        document.getElementById('main').style.pointerEvents = 'auto';
+        document.getElementById('intro').style.display = 'none';
+        document.getElementById('main').style.zIndex = '2';
       }, 1000);
     }
 
-    function toggleUI() {
-      const elements = ['welcome', 'main', 'enterBtn', 'soundToggle', 'dynmapBtn'];
-      isUIHidden = !isUIHidden;
+    function toggleSound() {
+      const iframe = document.querySelector('iframe');
+      const icon = document.getElementById('soundToggle');
+      isMuted = !isMuted;
 
-      elements.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.style.display = isUIHidden ? 'none' : '';
-        }
-      });
-
-      const toggleBtn = document.getElementById('toggleUIBtn');
-      toggleBtn.innerText = isUIHidden ? '⧉' : '⧉';
-
-      const bgContainer = document.getElementById('bg-container');
-      if (isUIHidden) {
-        bgContainer.classList.add('no-blur');
-      } else {
-        bgContainer.classList.remove('no-blur');
-      }
+      const src = iframe.src.split('?')[0];
+      iframe.src = `${src}?autoplay=1&controls=0&loop=1&playlist=FuPdiH4NFGs&mute=${isMuted ? 1 : 0}`;
+      icon.textContent = isMuted ? '🔇' : '🔊';
     }
 
-    function openDynmap() {
-      window.open('http://saranekoth.mc.in.th:25009/', '_blank');
-    }
-
-    window.addEventListener('load', () => {
+    function goBack() {
+      document.getElementById('main').style.opacity = '0';
+      document.getElementById('intro').style.display = 'block';
+      document.getElementById('intro').style.opacity = '1';
       setTimeout(() => {
-        const btn = document.getElementById('enterBtn');
-        btn.disabled = false;
-        btn.classList.add('visible');
-      }, 5000);
-    });
+        document.getElementById('main').style.zIndex = '1';
+      }, 1000);
+    }
   </script>
 </body>
 </html>
-<!-- End of index.html -->
- 
