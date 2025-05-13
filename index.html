@@ -8,194 +8,191 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    height: 100%;
-    font-family: sans-serif;
-    font-size: clamp(14px, 1.5vw, 24px);
-  }
-
-  .fullscreen-bg {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-    transition: filter 0.5s ease;
-  }
-
-  .fullscreen-bg iframe {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 177.77vh;
-    height: 100vh;
-    min-width: 100vw;
-    min-height: 56.25vw;
-    pointer-events: none;
-  }
-
-  .fullscreen-bg::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(5px);
-    background: rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    transition: backdrop-filter 0.5s ease, background 0.5s ease;
-  }
-
-  .fullscreen-bg.no-blur::after {
-    backdrop-filter: none;
-    background: none;
-  }
-
-  #welcome, #main {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    transition: opacity 1s ease;
-    z-index: 5;
-    text-align: center;
-    padding: 1rem;
-    background: none !important;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  #welcome h1 {
-    opacity: 0;
-    animation: fadeIn 3s ease forwards, glowText 3s infinite ease-in-out;
-    animation-delay: 1s;
-    font-size: clamp(2rem, 4vw, 5rem);
-    font-family: 'Prompt', sans-serif;
-    color: #ffffff;
-    text-shadow: 
-      0 0 10px #00f0ff,
-      0 0 20px #00f0ff,
-      0 0 40px #00f0ff,
-      0 0 80px #00f0ff;
-  }
-
-  @keyframes glowText {
-    0% { text-shadow: 0 0 5px #00f0ff; }
-    50% { text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff; }
-    100% { text-shadow: 0 0 5px #00f0ff; }
-  }
-
-  #enterBtn {
-    opacity: 0;
-    transition: opacity 1s ease;
-    font-size: clamp(1rem, 2vw, 2rem);
-    padding: 1rem 2rem;
-    background: none;
-    border: none;
-    color: #00f0ff;
-    text-shadow: 0 0 10px #00f0ff;
-    cursor: pointer;
-  }
-
-  #enterBtn.visible {
-    opacity: 1;
-  }
-
-  #main h1, #main p {
-    background: none !important;
-    text-shadow: 0 0 10px white;
-  }
-
-  button, a#dynmapBtn {
-    padding: 0.8em 1.5em;
-    font-size: clamp(1rem, 2vw, 2rem);
-    background: none !important;
-    border: none;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: text-shadow 0.3s ease;
-    text-shadow: 0 0 10px white;
-  }
-
-  button:hover, a#dynmapBtn:hover {
-    text-shadow: 0 0 20px #fff, 0 0 40px #fff;
-  }
-
-  button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
-  #soundToggle, #dynmapBtn, #toggleUIBtn {
-    font-size: clamp(1.5rem, 3vw, 3rem);
-    padding: 0.5em;
-  }
-
-  #soundToggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 20;
-  }
-
-  #toggleUIBtn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-  }
-
-  #dynmapBtn {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 20;
-  }
-
-  #joinGameBtn {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 20;
-    font-size: clamp(1.5rem, 3vw, 3rem);
-    padding: 0.5em;
-    background: none;
-    border: none;
-    color: rgb(0, 255, 64);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: text-shadow 0.3s ease, box-shadow 0.3s ease;
-    text-shadow: 0 0 10px rgb(0, 255, 64);
-  }
-
-  #joinGameBtn:hover {
-    text-shadow: 0 0 20px rgb(0, 255, 64), 0 0 30px rgb(0, 255, 64);
-    box-shadow: 0 0 20px rgba(0, 255, 64, 0.8), 0 0 30px rgba(0, 255, 64, 0.8);
-  }
-
-  @media screen and (max-width: 500px) {
-    #dynmapBtn {
-      font-size: 1.5rem;
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      font-family: sans-serif;
+      font-size: clamp(14px, 1.5vw, 24px);
     }
-  }
-</style>
 
+    .fullscreen-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      transition: filter 0.5s ease;
+    }
+
+    .fullscreen-bg iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 177.77vh;
+      height: 100vh;
+      min-width: 100vw;
+      min-height: 56.25vw;
+      pointer-events: none;
+    }
+
+    .fullscreen-bg::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      transition: backdrop-filter 0.5s ease, background 0.5s ease;
+    }
+
+    .fullscreen-bg.no-blur::after {
+      backdrop-filter: none;
+      background: none;
+    }
+
+    #welcome, #main {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      transition: opacity 1s ease;
+      z-index: 5;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    #welcome {
+      background: url('https://64.media.tumblr.com/b133335a7720015542f6de2225f65ece/6dba200f3854cb80-41/s540x810/f04d817b6104a5c68fe0568448d9485401ca3fb4.gif') center center / cover no-repeat;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    #welcome h1 {
+      opacity: 0;
+      animation: fadeIn 3s ease forwards, glowText 3s infinite ease-in-out;
+      animation-delay: 1s;
+      font-size: clamp(2rem, 4vw, 5rem);
+      font-family: 'Prompt', sans-serif;
+
+      color: #ffffff;
+      text-shadow: 
+        0 0 10px #00f0ff,
+        0 0 20px #00f0ff,
+        0 0 40px #00f0ff,
+        0 0 80px #00f0ff;
+    }
+    
+    @keyframes glowText {
+      0% { text-shadow: 0 0 5px #00f0ff; }
+      50% { text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff; }
+      100% { text-shadow: 0 0 5px #00f0ff; }
+    }
+
+    #enterBtn {
+      opacity: 0;
+      transition: opacity 1s ease;
+      font-size: clamp(1rem, 2vw, 2rem);
+      padding: 1rem 2rem;
+    }
+
+    #enterBtn.visible {
+      opacity: 1;
+    }
+
+    #main {
+      background: rgba(0,0,0,0.4);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    button, a#dynmapBtn {
+      padding: 0.8em 1.5em;
+      font-size: clamp(1rem, 2vw, 2rem);
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease, opacity 0.5s ease;
+    }
+
+    button:hover, a#dynmapBtn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    #soundToggle, #dynmapBtn, #toggleUIBtn {
+      font-size: clamp(1.5rem, 3vw, 3rem);
+      padding: 0.5em;
+    }
+
+    #soundToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 20;
+    }
+
+    #toggleUIBtn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+
+    #dynmapBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 20;
+    }
+
+    @media screen and (max-width: 500px) {
+      #dynmapBtn {
+        font-size: 1.5rem;
+      }
+    }
+#joinGameBtn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  padding: 0.5em;
+  background: none; /* เอา background ออกไป */
+  border: none;
+  color: rgb(0, 255, 64); /* ข้อความและไอคอนจะเป็นสีนี้ */
+  border-radius: 10px;
+  cursor: pointer;
+  transition: text-shadow 0.3s ease, box-shadow 0.3s ease;
+}
+
+#joinGameBtn:hover {
+  text-shadow: 0 0 10px rgb(0, 255, 64), 0 0 20px rgb(0, 255, 64), 0 0 30px rgb(0, 255, 64); /* Glow effect สำหรับข้อความ */
+  box-shadow: 0 0 20px rgba(0, 255, 64, 0.8), 0 0 30px rgba(0, 255, 64, 0.8); /* Glow effect สำหรับ icon */
+}
+
+  </style>
 </head>
 <body>
   <div class="fullscreen-bg" id="bg-container">
