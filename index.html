@@ -8,218 +8,194 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 100%;
-      font-family: sans-serif;
-      font-size: clamp(14px, 1.5vw, 24px);
-      background: black;
-    }
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    font-family: sans-serif;
+    font-size: clamp(14px, 1.5vw, 24px);
+  }
 
-    .fullscreen-bg {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      overflow: hidden;
-      transition: filter 0.5s ease;
-    }
+  .fullscreen-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    transition: filter 0.5s ease;
+  }
 
-    .fullscreen-bg iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 177.77vh;
-      height: 100vh;
-      min-width: 100vw;
-      min-height: 56.25vw;
-      pointer-events: none;
-    }
+  .fullscreen-bg iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 177.77vh;
+    height: 100vh;
+    min-width: 100vw;
+    min-height: 56.25vw;
+    pointer-events: none;
+  }
 
-    .fullscreen-bg::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      pointer-events: none;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(5px);
-      background: rgba(0, 0, 0, 0.2);
-      z-index: 1;
-      opacity: 0.8;
-      transition: backdrop-filter 0.5s ease, background 0.5s ease;
-    }
+  .fullscreen-bg::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    transition: backdrop-filter 0.5s ease, background 0.5s ease;
+  }
 
-    .fullscreen-bg.no-blur::after {
-      backdrop-filter: none;
-      background: none;
-      opacity: 0;
-    }
+  .fullscreen-bg.no-blur::after {
+    backdrop-filter: none;
+    background: none;
+  }
 
-    #welcome, #main {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      transition: opacity 1s ease;
-      z-index: 5;
-      text-align: center;
-      padding: 1rem;
-    }
+  #welcome, #main {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: opacity 1s ease;
+    z-index: 5;
+    text-align: center;
+    padding: 1rem;
+    background: none !important;
+  }
 
-    #welcome {
-      background: url('https://64.media.tumblr.com/b133335a7720015542f6de2225f65ece/6dba200f3854cb80-41/s540x810/f04d817b6104a5c68fe0568448d9485401ca3fb4.gif') center center / cover no-repeat;
-    }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+  #welcome h1 {
+    opacity: 0;
+    animation: fadeIn 3s ease forwards, glowText 3s infinite ease-in-out;
+    animation-delay: 1s;
+    font-size: clamp(2rem, 4vw, 5rem);
+    font-family: 'Prompt', sans-serif;
+    color: #ffffff;
+    text-shadow: 
+      0 0 10px #00f0ff,
+      0 0 20px #00f0ff,
+      0 0 40px #00f0ff,
+      0 0 80px #00f0ff;
+  }
 
-    #welcome h1 {
-      opacity: 0;
-      animation: fadeIn 3s ease forwards, glowText 3s infinite ease-in-out;
-      animation-delay: 1s;
-      font-size: clamp(2rem, 4vw, 5rem);
-      font-family: 'Prompt', sans-serif;
-      color: #ffffff;
-      text-shadow: 
-        0 0 10px #00f0ff,
-        0 0 20px #00f0ff,
-        0 0 40px #00f0ff,
-        0 0 80px #00f0ff;
-    }
+  @keyframes glowText {
+    0% { text-shadow: 0 0 5px #00f0ff; }
+    50% { text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff; }
+    100% { text-shadow: 0 0 5px #00f0ff; }
+  }
 
-    @keyframes glowText {
-      0% { text-shadow: 0 0 5px #00f0ff; }
-      50% { text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff; }
-      100% { text-shadow: 0 0 5px #00f0ff; }
-    }
+  #enterBtn {
+    opacity: 0;
+    transition: opacity 1s ease;
+    font-size: clamp(1rem, 2vw, 2rem);
+    padding: 1rem 2rem;
+    background: none;
+    border: none;
+    color: #00f0ff;
+    text-shadow: 0 0 10px #00f0ff;
+    cursor: pointer;
+  }
 
-    #enterBtn {
-      opacity: 0;
-      transition: opacity 1s ease;
-      font-size: clamp(1rem, 2vw, 2rem);
-      padding: 1rem 2rem;
-      background: none;
-      border: 2px solid #00f0ff;
-      color: #00f0ff;
-      border-radius: 10px;
-      cursor: pointer;
-      text-shadow: 0 0 10px #00f0ff;
-    }
+  #enterBtn.visible {
+    opacity: 1;
+  }
 
-    #enterBtn:hover {
-      background: rgba(0, 240, 255, 0.1);
-      box-shadow: 0 0 20px #00f0ff;
-    }
+  #main h1, #main p {
+    background: none !important;
+    text-shadow: 0 0 10px white;
+  }
 
-    #enterBtn.visible {
-      opacity: 1;
-    }
+  button, a#dynmapBtn {
+    padding: 0.8em 1.5em;
+    font-size: clamp(1rem, 2vw, 2rem);
+    background: none !important;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: text-shadow 0.3s ease;
+    text-shadow: 0 0 10px white;
+  }
 
-    #main {
-      background: none;
-      opacity: 0;
-      pointer-events: none;
-    }
+  button:hover, a#dynmapBtn:hover {
+    text-shadow: 0 0 20px #fff, 0 0 40px #fff;
+  }
 
-    #main h1, #main p {
-      background: none;
-      color: white;
-      text-shadow: 0 0 10px #00f0ff;
-      margin-bottom: 1rem;
-    }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 
-    button, a#dynmapBtn {
-      background: none;
-      border: 2px solid #ffffff44;
-      color: white;
-      border-radius: 10px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      padding: 0.8em 1.5em;
-      font-size: clamp(1rem, 2vw, 2rem);
-      text-shadow: 0 0 10px white;
-    }
+  #soundToggle, #dynmapBtn, #toggleUIBtn {
+    font-size: clamp(1.5rem, 3vw, 3rem);
+    padding: 0.5em;
+  }
 
-    button:hover, a#dynmapBtn:hover {
-      background: rgba(255,255,255,0.1);
-      box-shadow: 0 0 15px white;
-    }
+  #soundToggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 20;
+  }
 
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
+  #toggleUIBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+  }
 
-    #soundToggle, #dynmapBtn, #toggleUIBtn {
-      font-size: clamp(1.5rem, 3vw, 3rem);
-      padding: 0.5em;
-      border: none;
-      background: none;
-      text-shadow: 0 0 10px white;
-    }
+  #dynmapBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 20;
+  }
 
-    #soundToggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 20;
-    }
+  #joinGameBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    font-size: clamp(1.5rem, 3vw, 3rem);
+    padding: 0.5em;
+    background: none;
+    border: none;
+    color: rgb(0, 255, 64);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: text-shadow 0.3s ease, box-shadow 0.3s ease;
+    text-shadow: 0 0 10px rgb(0, 255, 64);
+  }
 
-    #toggleUIBtn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-    }
+  #joinGameBtn:hover {
+    text-shadow: 0 0 20px rgb(0, 255, 64), 0 0 30px rgb(0, 255, 64);
+    box-shadow: 0 0 20px rgba(0, 255, 64, 0.8), 0 0 30px rgba(0, 255, 64, 0.8);
+  }
 
+  @media screen and (max-width: 500px) {
     #dynmapBtn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      z-index: 20;
+      font-size: 1.5rem;
     }
+  }
+</style>
 
-    #joinGameBtn {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 20;
-      font-size: clamp(1.5rem, 3vw, 3rem);
-      padding: 0.5em;
-      background: none;
-      border: none;
-      color: rgb(0, 255, 64);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: text-shadow 0.3s ease, box-shadow 0.3s ease;
-      text-shadow: 0 0 10px rgb(0, 255, 64);
-    }
-
-    #joinGameBtn:hover {
-      text-shadow: 0 0 10px rgb(0, 255, 64), 0 0 20px rgb(0, 255, 64), 0 0 30px rgb(0, 255, 64);
-      box-shadow: 0 0 20px rgba(0, 255, 64, 0.8), 0 0 30px rgba(0, 255, 64, 0.8);
-    }
-
-    @media screen and (max-width: 500px) {
-      #dynmapBtn {
-        font-size: 1.5rem;
-      }
-    }
-  </style>
 </head>
 <body>
   <div class="fullscreen-bg" id="bg-container">
@@ -235,32 +211,115 @@
     <h1>นี่คือศูนย์บัญชาการของเรา!</h1>
     <p>มาเล่นด้วยกันแบบชิล ๆ นะ ขออย่างเดียว อย่าเกรียน 🤝</p>
     <p>"เล่นเกมให้สนุก ไม่ใช่สนุกที่ทำคนอื่นเดือดร้อน!"</p>
-    <p>มีคำถามหรืออยากคุย ติดต่อได้ที่ 
-      <a href="https://www.facebook.com/BossjaeTH" target="_blank" style="color: #00f;">
-        <i class="fab fa-facebook-f" style="font-size: 2rem;"></i>
-      </a> 
-      หรือ 
-      <a href="https://discord.gg/A5XZFt7kjc" target="_blank" style="color: #00f;">
-        <i class="fab fa-discord" style="font-size: 2rem;"></i>
-      </a>
-    </p>
+<p>มีคำถามหรืออยากคุย ติดต่อได้ที่ 
+  <a href="https://www.facebook.com/BossjaeTH" target="_blank" style="color: #00f;">
+    <i class="fab fa-facebook-f" style="font-size: 2rem;"></i>
+  </a> 
+  หรือ 
+  <a href="https://discord.gg/A5XZFt7kjc" target="_blank" style="color: #00f;">
+    <i class="fab fa-discord" style="font-size: 2rem;"></i>
+  </a> ได้เลยจ้า 💬
+</p>
+    <button id="soundToggle" onclick="toggleSound()" title="เปิด/ปิดเสียง">🔇</button>
+    <button id="dynmapBtn" onclick="openDynmap()" title="เปิดแผนที่ Dynmap">🗺️</button>
+    <button id="joinGameBtn" onclick="joinGame()" title="เข้าร่วมเกม">🎮 เข้าร่วมเกม</button>
   </div>
 
+  <button id="toggleUIBtn" onclick="toggleUI()">⧉</button>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    // เปลี่ยนหน้า
+    let player;
+    let isMuted = true;
+    let isUIHidden = false;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('yt-bg', {
+        videoId: 'jAS-GKmQ_5o',
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          mute: 1,
+          loop: 1,
+          playlist: 'jAS-GKmQ_5o',
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0
+        },
+        events: {
+          onReady: () => {
+            player.setVolume(50);
+            player.mute();
+          }
+        }
+      });
+    }
+
+    function toggleSound() {
+      if (!player) return;
+      const btn = document.getElementById('soundToggle');
+      isMuted = !isMuted;
+      if (isMuted) {
+        player.mute();
+        btn.innerText = '🔇';
+      } else {
+        player.unMute();
+        player.setVolume(20);
+        btn.innerText = '🔊';
+      }
+    }
+
+    function joinGame() {
+      window.open('https://mc.in.th/saranekoth', '_blank');
+    }
+
     function enterSite() {
       document.getElementById('welcome').style.opacity = '0';
-      document.getElementById('main').style.opacity = '1';
-      document.getElementById('main').style.pointerEvents = 'all';
+      document.getElementById('welcome').style.pointerEvents = 'none';
       setTimeout(() => {
-        document.getElementById('welcome').style.display = 'none';
-        document.getElementById('main').style.display = 'block';
+        document.getElementById('main').style.opacity = '1';
+        document.getElementById('main').style.pointerEvents = 'auto';
       }, 1000);
     }
 
-    // เพิ่มการตั้งค่าระบบเสียง
-    let soundEnabled = true;
-    document.getElementById('enterBtn').classList.add('visible');
+    function toggleUI() {
+      const elements = ['welcome', 'main', 'enterBtn', 'soundToggle', 'dynmapBtn'];
+      isUIHidden = !isUIHidden;
+
+      elements.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.style.display = isUIHidden ? 'none' : '';
+        }
+      });
+
+      const toggleBtn = document.getElementById('toggleUIBtn');
+      toggleBtn.innerText = isUIHidden ? '⧉' : '⧉';
+
+      const bgContainer = document.getElementById('bg-container');
+      if (isUIHidden) {
+        bgContainer.classList.add('no-blur');
+      } else {
+        bgContainer.classList.remove('no-blur');
+      }
+    }
+
+    function openDynmap() {
+      window.open('http://saranekoth.mc.in.th:25009/', '_blank');
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const btn = document.getElementById('enterBtn');
+        btn.disabled = false;
+        btn.classList.add('visible');
+      }, 3500);
+    });
   </script>
 </body>
 </html>
+<!--
+  This HTML file is a simple landing page for a fanpage of "SaraNekoTH".
+  It includes a YouTube video as a background, a welcome message, and buttons to enter the site and toggle sound.
+  The page is styled with CSS for a modern look and responsive design.
+  The JavaScript handles the YouTube API, sound toggling, and UI interactions.
