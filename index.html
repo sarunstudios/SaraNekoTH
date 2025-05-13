@@ -5,6 +5,8 @@
   <title>SaraNekoTH Fanpage</title>
   <link rel="icon" type="image/png" href="https://www.favicon.cc/logo3d/445732.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     html, body {
@@ -84,6 +86,13 @@
       animation: fadeIn 3s ease forwards;
       animation-delay: 1s;
       font-size: clamp(2rem, 4vw, 5rem);
+      font-family: 'Prompt', sans-serif;
+
+      color: #fff;
+      text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 40px #00f0ff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.5em 1em;
+      border-radius: 20px;
     }
 
     #enterBtn {
@@ -294,7 +303,7 @@
         const btn = document.getElementById('enterBtn');
         btn.disabled = false;
         btn.classList.add('visible');
-      }, 5000);
+      }, 3500);
     });
   </script>
 </body>
